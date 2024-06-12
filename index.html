@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин Автозапчастей</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #FFC107;
+            color: black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        nav a {
+            color: #FFC107;
+            padding: 15px 25px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #FFC107;
+            color: black;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #000;
+            border-radius: 10px;
+            margin: 15px;
+            width: 280px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25em;
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .card-text {
+            margin: 0 0 10px;
+            color: #555;
+        }
+
+        .card-price {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #FFC107;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #FFC107;
+            color: black;
+            text-align: center;
+            padding: 9px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+
+            height: 55px;
+        }
+
+        .name{
+            color: black;
+            text-align: center;
+            padding: 9px 0;
+            position: absolute;
+            bottom: 0;
+            width: 10%;
+            left: 45%;
+
+        }
+
+        .telef {
+            color: black;
+            text-align: center;
+            padding: 9px 0;
+            position: absolute;
+            bottom: 0;
+            width: 10%;
+            left: 90%;
+
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="email"],
+        .modal-content input[type="password"] {
+            width: 92%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #000;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #FFC107;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #FFC107;
+            color: black;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Магазин Автозапчастей</h1>
+        <h1>BiBiCa</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="showSection('all')">Все товары</a>
+        <a href="#" onclick="showSection('engine')">Двигатель</a>
+        <a href="#" onclick="showSection('brakes')">Тормоза</a>
+        <a href="#" onclick="showSection('suspension')">Подвеска</a>
+        <a href="#" onclick="showSection('electronics')">Электроника</a>
+        <a href="#" onclick="openModal('registerModal')">Регистрация</a>
+        <a href="#" onclick="openModal('loginModal')">Вход</a>
+    </nav>
+    
+    <div class="container" id="productContainer">
+        <!-- Engine Parts -->
+        <div class="card" data-category="engine">
+            <img src="https://img.freepik.com/premium-vector/isolated-monochrome-engine-piston-vector-illustration_289688-254.jpg" alt="Engine Part 1">
+            <div class="card-body">
+                <h2 class="card-title">Поршни</h2>
+                <p class="card-text">Высококачественная деталь для вашего двигателя.</p>
+                <p class="card-price">2500 руб.</p>
+            </div>
+        </div>
+        <div class="card" data-category="engine">
+            <img src="https://main-cdn.sbermegamarket.ru/big1/hlr-system/-14/630/079/383/211/746/100030978493b0.jpg" alt="Engine Part 2">
+            <div class="card-body">
+                <h2 class="card-title">Клапана</h2>
+                <p class="card-text">Превосходная надежность и производительность.</p>
+                <p class="card-price">2700 руб.</p>
+            </div>
+        </div>
+        <!-- Brakes Parts -->
+        <div class="card" data-category="brakes">
+            <img src="https://tmpekar.ru/upload/iblock/43b/4whonl9zr5lrpo4w52a3bhpto25304yk.jpeg" alt="Brakes Part 1">
+            <div class="card-body">
+                <h2 class="card-title">Тормозные колодки</h2>
+                <p class="card-text">Надежные тормозные колодки для безопасности.</p>
+                <p class="card-price">1500 руб.</p>
+            </div>
+        </div>
+        <div class="card" data-category="brakes">
+            <img src="https://ir.ozone.ru/s3/multimedia-3/c1000/6084771219.jpg" alt="Brakes Part 2">
+            <div class="card-body">
+                <h2 class="card-title">Тормозные диски</h2>
+                <p class="card-text">Высококачественные тормозные диски.</p>
+                <p class="card-price">3200 руб.</p>
+            </div>
+        </div>
+        <!-- Suspension Parts -->
+        <div class="card" data-category="suspension">
+            <img src="https://okeydrive.ru/wp-content/uploads/2021/10/6018070731.jpg" alt="Suspension Part 1">
+            <div class="card-body">
+                <h2 class="card-title">Пружина</h2>
+                <p class="card-text">Прочные амортизаторы для мягкой езды.</p>
+                <p class="card-price">3000 руб.</p>
+            </div>
+        </div>
+        <div class="card" data-category="suspension">
+            <img src="https://webcdn.intercars.eu/thumbnails/tcd/0032/0032313478.jpg" alt="Suspension Part 2">
+            <div class="card-body">
+                <h2 class="card-title">Амортизатор</h2>
+                <p class="card-text">Отличная долговечность и качество.</p>
+                <p class="card-price">3200 руб.</p>
+            </div>
+        </div>
+        <!-- Electronics Parts -->
+        <div class="card" data-category="electronics">
+            <img src="https://www.avtomotiv.ru/upload/iblock/43f/43fc62f3f30eee655ff14401748dab6c.jpg" alt="Electronics Part 1">
+            <div class="card-body">
+                <h2 class="card-title">Аккумулятор</h2>
+                <p class="card-text">Надежная батарея для вашего автомобиля.</p>
+                <p class="card-price">4000 руб.</p>
+            </div>
+        </div>
+        <div class="card" data-category="electronics">
+            <img src="https://avto-svecha.ru/images/collection/sticker/bosch-silver-57cd83375967e.jpg" alt="Electronics Part 2">
+            <div class="card-body">
+                <h2 class="card-title">Свечи</h2>
+                <p class="card-text">Отличная производительность и долговечность.</p>
+                <p class="card-price">4500 руб.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Регистрация</h2>
+            <input type="text" id="registerName" placeholder="Имя">
+            <input type="email" id="registerEmail" placeholder="Email">
+            <input type="password" id="registerPassword" placeholder="Пароль">
+            <button onclick="register()">Зарегистрироваться</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Вход</h2>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Пароль">
+            <button onclick="login()">Войти</button>
+        </div>
+    </div>
+
+    <footer>
+        <p class="name">&copy; 2024 BiBiCa</p>
+        <p class="telef">Телефон 89213939411</p>
+    </footer>
+    <script>
+        function filterProducts() {
+            const filter = document.getElementById('categoryFilter').value;
+            filterCategory(filter);
+        }
+
+        function filterCategory(category) {
+            const products = document.querySelectorAll('.card');
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function showSection(section) {
+            const productContainer = document.getElementById('productContainer');
+            productContainer.style.display = 'flex';
+            filterCategory(section);
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            if (!name || !email || !password) {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
+
+            alert("Вы успешно зарегистрировались!");
+            closeModal('registerModal');
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
+
+            alert("Вы успешно вошли в систему!");
+            closeModal('loginModal');
+        }
+
+        window.onclick = function(event) {
+            const registerModal = document.getElementById('registerModal');
+            const loginModal = document.getElementById('loginModal');
+            if (event.target == registerModal) {
+                registerModal.style.display = 'none';
+            }
+            if (event.target == loginModal) {
+                loginModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
