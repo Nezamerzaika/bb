@@ -87,6 +87,23 @@
             color: #FFC107;
         }
 
+        .card button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #FFC107;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card button:hover {
+            background-color: #FFC107;
+            color: black;
+        }
+
         .filter-container {
             display: flex;
             justify-content: center;
@@ -112,7 +129,7 @@
             height: 55px;
         }
 
-        .name{
+        .name {
             color: black;
             text-align: center;
             padding: 9px 0;
@@ -120,7 +137,6 @@
             bottom: 0;
             width: 10%;
             left: 45%;
-
         }
 
         .telef {
@@ -131,7 +147,6 @@
             bottom: 0;
             width: 10%;
             left: 90%;
-
         }
 
         .modal {
@@ -204,6 +219,54 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        #orderSection {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #orderContainer {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .order-item h3 {
+            margin: 0;
+        }
+
+        .order-item p {
+            margin: 0;
+        }
+
+        .order-item button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #FFC107;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .order-item button:hover {
+            background-color: #FFC107;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -217,6 +280,7 @@
         <a href="#" onclick="showSection('brakes')">Тормоза</a>
         <a href="#" onclick="showSection('suspension')">Подвеска</a>
         <a href="#" onclick="showSection('electronics')">Электроника</a>
+        <a href="#" onclick="showSection('order')">Заказ</a>
         <a href="#" onclick="openModal('registerModal')">Регистрация</a>
         <a href="#" onclick="openModal('loginModal')">Вход</a>
     </nav>
@@ -229,6 +293,7 @@
                 <h2 class="card-title">Поршни</h2>
                 <p class="card-text">Высококачественная деталь для вашего двигателя.</p>
                 <p class="card-price">2500 руб.</p>
+                <button onclick="addToOrder('Поршни', 2500)">Заказать</button>
             </div>
         </div>
         <div class="card" data-category="engine">
@@ -237,6 +302,7 @@
                 <h2 class="card-title">Клапана</h2>
                 <p class="card-text">Превосходная надежность и производительность.</p>
                 <p class="card-price">2700 руб.</p>
+                <button onclick="addToOrder('Клапана', 2700)">Заказать</button>
             </div>
         </div>
         <!-- Brakes Parts -->
@@ -246,6 +312,7 @@
                 <h2 class="card-title">Тормозные колодки</h2>
                 <p class="card-text">Надежные тормозные колодки для безопасности.</p>
                 <p class="card-price">1500 руб.</p>
+                <button onclick="addToOrder('Тормозные колодки', 1500)">Заказать</button>
             </div>
         </div>
         <div class="card" data-category="brakes">
@@ -254,6 +321,7 @@
                 <h2 class="card-title">Тормозные диски</h2>
                 <p class="card-text">Высококачественные тормозные диски.</p>
                 <p class="card-price">3200 руб.</p>
+                <button onclick="addToOrder('Тормозные диски', 3200)">Заказать</button>
             </div>
         </div>
         <!-- Suspension Parts -->
@@ -263,6 +331,7 @@
                 <h2 class="card-title">Пружина</h2>
                 <p class="card-text">Прочные амортизаторы для мягкой езды.</p>
                 <p class="card-price">3000 руб.</p>
+                <button onclick="addToOrder('Пружина', 3000)">Заказать</button>
             </div>
         </div>
         <div class="card" data-category="suspension">
@@ -271,6 +340,7 @@
                 <h2 class="card-title">Амортизатор</h2>
                 <p class="card-text">Отличная долговечность и качество.</p>
                 <p class="card-price">3200 руб.</p>
+                <button onclick="addToOrder('Амортизатор', 3200)">Заказать</button>
             </div>
         </div>
         <!-- Electronics Parts -->
@@ -280,6 +350,7 @@
                 <h2 class="card-title">Аккумулятор</h2>
                 <p class="card-text">Надежная батарея для вашего автомобиля.</p>
                 <p class="card-price">4000 руб.</p>
+                <button onclick="addToOrder('Аккумулятор', 4000)">Заказать</button>
             </div>
         </div>
         <div class="card" data-category="electronics">
@@ -288,8 +359,15 @@
                 <h2 class="card-title">Свечи</h2>
                 <p class="card-text">Отличная производительность и долговечность.</p>
                 <p class="card-price">4500 руб.</p>
+                <button onclick="addToOrder('Свечи', 4500)">Заказать</button>
             </div>
         </div>
+    </div>
+
+    <!-- Order Section -->
+    <div id="orderSection">
+        <h2>Заказанные товары</h2>
+        <div id="orderContainer"></div>
     </div>
 
     <!-- Register Modal -->
@@ -320,6 +398,8 @@
         <p class="telef">Телефон 89213939411</p>
     </footer>
     <script>
+        let orders = [];
+
         function filterProducts() {
             const filter = document.getElementById('categoryFilter').value;
             filterCategory(filter);
@@ -338,8 +418,48 @@
 
         function showSection(section) {
             const productContainer = document.getElementById('productContainer');
-            productContainer.style.display = 'flex';
-            filterCategory(section);
+            const orderSection = document.getElementById('orderSection');
+            if (section === 'order') {
+                productContainer.style.display = 'none';
+                orderSection.style.display = 'flex';
+                displayOrders();
+            } else {
+                productContainer.style.display = 'flex';
+                orderSection.style.display = 'none';
+                filterCategory(section);
+            }
+        }
+
+        function addToOrder(title, price) {
+            const orderItem = { title, price };
+            orders.push(orderItem);
+            alert(`Товар "${title}" добавлен в заказ.`);
+        }
+
+        function displayOrders() {
+            const orderContainer = document.getElementById('orderContainer');
+            orderContainer.innerHTML = '';
+
+            if (orders.length === 0) {
+                orderContainer.innerHTML = '<p>Ваш заказ пуст.</p>';
+                return;
+            }
+
+            orders.forEach((order, index) => {
+                const orderElement = document.createElement('div');
+                orderElement.classList.add('order-item');
+                orderElement.innerHTML = `
+                    <h3>${order.title}</h3>
+                    <p>${order.price} руб.</p>
+                    <button onclick="removeOrder(${index})">Удалить</button>
+                `;
+                orderContainer.appendChild(orderElement);
+            });
+        }
+
+        function removeOrder(index) {
+            orders.splice(index, 1);
+            displayOrders();
         }
 
         function openModal(modalId) {
